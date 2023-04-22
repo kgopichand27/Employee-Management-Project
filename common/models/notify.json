@@ -1,0 +1,50 @@
+{
+  "name": "notify",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "scopes": {
+    "employees": {
+      "where": {
+        "from": "HR"
+      }
+    },
+    "managers": {
+      "where": {
+        "from": "HR",
+        "to": "Managers"
+      }
+    }
+  },
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "from": {
+      "type": "string",
+      "required": true
+    },
+    "manager": {
+      "type": "string",
+      "required": false
+    },
+    "to": {
+      "type": "string",
+      "required": true
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "subject": {
+      "type": "string",
+      "required": true
+    },
+    "link": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
