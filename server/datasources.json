@@ -1,0 +1,15 @@
+{
+  "db": {
+    "name": "db",
+    "connector": "memory"
+  },
+  "mymongo": {
+    "host": "",
+    "url": "mongodb+srv://gopi:gopichand@cluster0.lawq5cp.mongodb.net/Employee_lb?retryWrites=true&w=majority",
+    "database": "Employee_lb",
+    "password": "gopichand",
+    "name": "mymongo",
+    "user": "gopi",
+    "connector": "mongodb"
+  }
+}

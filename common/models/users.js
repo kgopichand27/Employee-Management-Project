@@ -68,7 +68,7 @@ module.exports = function(Users) {
 
     //remote method to get all employees under the particular manager
     Users.getEmployeesMng = function(manager,cb){
-        Users.find({where: {manager: manager}}, function(err, employees) {
+        Users.find({where: {manager: manager},  order: 'id DESC'}, function(err, employees) {
             if (err) return cb(err);
             cb(null, employees);
           });
@@ -79,4 +79,31 @@ module.exports = function(Users) {
         returns: {arg: 'employees', type: 'object'}
         
     })
+    // change password
+    Users.changePassword = function(id, currentPassword, newPassword, cb) {
+        Users.findById(id, function(err, Users) {
+          if (err) return cb(err);
+          if (!Users) return cb(new Error('User not found'));
+    
+          Users.hasPassword(currentPassword, function(err, isMatch) {
+            if (err) return cb(err);
+            if (!isMatch) return cb(new Error('Incorrect password'));
+    
+            Users.updateAttributes({password: newPassword}, function(err, updatedMyuser) {
+              if (err) return cb(err);
+              cb(null, updatedMyuser);
+            });
+          });
+        });
+      };
+
+      Users.remoteMethod('changePassword', {
+        accepts: [
+          {arg: 'id', type: 'string', required: true},
+          {arg: 'currentPassword', type: 'string', required: true},
+          {arg: 'newPassword', type: 'string', required: true}
+        ],
+        returns: {arg: 'Users', type: 'object'},
+        http: {verb: 'patch', path: '/change-password'}
+    });
 };

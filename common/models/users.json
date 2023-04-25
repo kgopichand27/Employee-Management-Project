@@ -28,9 +28,16 @@
     },
     "manager": {
       "type": "string",
-      "required": true
+      "required": false
+    },
+    "vacationLeaves": {
+      "type": "Number",
+      "default": 25
+    },
+    "sickLeaves": {
+      "type": "Number",
+      "default": 12
     }
-
   },
   "validations": [],
   "relations": {},
