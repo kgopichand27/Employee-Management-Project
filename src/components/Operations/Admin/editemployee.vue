@@ -1,0 +1,201 @@
+<template>
+    <div>
+        <Admin></Admin>
+        <div class="add-employee-form">
+            <h2>{{ employee.name }} Details</h2>
+            <form>
+              <div class="field">
+                <label class="label">Name</label>
+                <div class="control">
+                  <input class="input" type="text" v-model="employee.name" required>
+                </div>
+              </div>
+              <div class="field">
+                <label class="label">Email</label>
+                <div class="control">
+                  <input class="input" type="email" v-model="employee.email" required>
+                </div>
+              </div>
+              <div class="field">
+                <label class="label">Gender</label>
+                <div class="control">
+                  <input class="input" type="text" v-model="employee.gender" required>
+                </div>
+              </div>
+              <div class="field">
+                <label class="label">DOB</label>
+                <div class="control">
+                  <input class="input" type="text" v-model="employee.dob" required>
+                </div>
+              </div>
+              <div class="field">
+                <label class="label">Role</label>
+                <div class="control">
+                  <select class="select" v-model="employee.Role" required>
+                    <option disabled value="">Please select a role</option>
+                    <option v-for="role in Roles" v-bind:key="role">{{ role }}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="field"  v-if="this.employee.Role ==`Employee`">
+                <label class="label">Managers</label>
+                <div class="control">
+                  <select v-model="employee.manager">
+                    <option value="" disabled>Select an option</option>
+                    <option v-for="option in managers" :key="option.id" :value="option.id">{{ option.name }}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="field">
+                <label class="label">Designation</label>
+                <div class="control">
+                  <input class="input" type="text" v-model="employee.Designation" required>
+                </div>
+              </div>
+              <div class="field">
+                <div class="control">
+                  <button class="btn btn-success" type="submit" @click.prevent="EditEmployee">Edit Employee</button>
+                </div>
+                <div class="control">
+                    <button class="btn btn-danger" type="submit" @click.prevent="DeleteEmployee">Delete Employee</button>
+                  </div>
+                  <!-- <div class="control">
+                    <button class="btn btn-danger" type="submit" @click.prevent="DeleteAbsence">Delete Absences</button>
+                  </div> -->
+              </div>
+            </form>
+          </div>
+    </div>
+    
+  </template>
+  
+  <script>
+    import Admin from '@/components/NavBar/Admin.vue'
+    export default{
+      name: 'editEmployee',
+      components:{
+        Admin
+      },
+      data() {
+        return {
+          employee:{
+            name: '',
+            email:'',
+            gender: '',
+            dob: '',
+            Role: '',
+            Designation:'',
+            manager: ''
+          },
+          Roles:['Admin','Manager','Employee'],
+          managers:{},
+          isDisplay: false
+        }
+      },
+      methods:{
+        EditEmployee(){
+                const token = localStorage.getItem('token')
+                const id = this.$route.params.id
+                console.log(id);
+                this.$http.put(`http://localhost:3000/api/Users/${id}?access_token=${token}`, this.employee)
+                    .then(response => {
+                        console.log('successfully updated')
+                        console.log(response.body);
+                    })
+                // this.isDisplay = true
+        },
+        loadEmployee() {
+                const token = localStorage.getItem('token')
+                const id = this.$route.params.id
+                console.log(id);
+                this.$http.get(`http://localhost:3000/api/Users/${id}?access_token=${token}`)
+                    .then(response => {
+                        this.employee = response.body;
+                        console.log(response.body);
+                    })
+
+            },
+        loadManagers(){
+          const token = localStorage.getItem('token')
+                this.$http.get(`http://localhost:3000/api/Users/managers?access_token=${token}`)
+                    .then(response => {
+                        this.managers = response.body;
+                        console.log(response.body);
+                    }).catch(err =>{
+                      console.log(err);
+                    })
+        },
+        DeleteEmployee(){
+                const id = this.$route.params.id
+                const idd = {id}
+                console.log(id);
+                const token = localStorage.getItem('token')
+                this.$http.post(`http://localhost:3000/api/Users/DeleteUser?access_token=${token}`, idd)
+                    .then(response => {
+                        console.log(response.body);
+                        console.log('successfully deleted')
+                        this.$http.delete(`http://localhost:3000/api/absences/deleteall?userId=${id}&access_token=${token}`)
+                          .then(response => {
+                            console.log('all absences deleted',response)
+                          })
+                        this.$router.push('../Employees')
+                    })
+            },
+        // DeleteAbsence(){
+        //   const id = this.$route.params.id
+        //         // const idd = {id}
+        //         // console.log(id);
+        //   const token = localStorage.getItem('token')
+         
+        // }
+  
+      },
+      mounted(){
+        this.loadEmployee();
+        this.loadManagers();
+        console.log(this.employee)
+      }
+    }
+  </script>
+  
+  <style scoped>
+  .add-employee-form {
+    margin: 2rem auto;
+    max-width: 600px;
+    padding: 2rem;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+  }
+  
+  h2 {
+    margin-bottom: 2rem;
+    font-size: 2rem;
+  }
+  
+  .field {
+    margin-bottom: 1.5rem;
+  }
+  
+  .control {
+    display: flex;
+  }
+  
+  .label {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+  
+  .input,
+  .select {
+    flex: 1;
+    margin-right: 1rem;
+  }
+  
+  button {
+    margin-top: 1.5rem;
+  }
+  .btn-primary{
+    padding-right: 5px;
+  }
+  </style>
+  
