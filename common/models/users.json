@@ -78,6 +78,13 @@
       "principalType": "ROLE",
       "principalId": "Employee",
       "permission": "ALLOW",
+      "property": "replaceById"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "Employee",
+      "permission": "ALLOW",
       "property": "find"
     }
   ],

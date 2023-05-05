@@ -1,44 +1,30 @@
 {
-  "name": "absence",
+  "name": "event",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
     "validateUpsert": true
   },
   "properties": {
-    "name": {
-      "type": "string"
-    },
-    "startDate": {
-      "type": "date"
-    },
-    "endDate": {
-      "type": "date"
-    },
-    "typeof": {
-      "type": "string"
-    },
-    "reason": {
-      "type": "string"
-    },
-    "status": {
+    
+    "description": {
       "type": "string",
-      "default": "pending"
+      "required": true
     },
     "userId": {
       "type": "string"
     },
-    "leaves": {
-      "type": "number"
+    "date": {
+      "type": "date"
     },
-    "managerId": {
+    "time": {
       "type": "string"
     }
   },
   "validations": [],
   "relations": {},
   "acls": [
-    
+      
     {
       "accessType": "*",
       "principalType": "ROLE",

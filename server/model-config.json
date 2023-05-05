@@ -59,5 +59,9 @@
   "update": {
     "dataSource": "mymongo",
     "public": true
+  },
+  "event": {
+    "dataSource": "mymongo",
+    "public": true
   }
 }

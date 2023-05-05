@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function(Absence) {
-             // accepting the request
+  // accepting the leave request
   Absence.accept = (id, next) => {
     Absence.findOne({where: {id: id}}, (err, result) => {
       if (err) return next(err);
@@ -45,6 +45,7 @@ module.exports = function(Absence) {
   });
 
 
+  // rejecting the leave request
   Absence.reject = (id, next) => {
     Absence.findOne({where: {id: id}}, (err, result) => {
       if (err) return next(err);
@@ -64,7 +65,7 @@ module.exports = function(Absence) {
     http: {verb: 'post', path: '/rejectRequest'},
   });
 
-
+// Get all employee leave requests to their corresponding manager based on managerId
 Absence.getEmployeesMng = function(manager,cb){
   Absence.find({where: {managerId: manager}, order: 'id DESC'}, function(err, absences) {
       if (err) return cb(err);
@@ -77,8 +78,9 @@ Absence.remoteMethod('getEmployeesMng', {
   returns: {arg: 'absences', type: 'object'}
   
 })
-
+// remote method to get all employee leave requests
 Absence.getEmployeeLeaves = function(id,cb){
+  const date = new Date();
   Absence.find({where: {userId: id}, order: 'id DESC'}, function(err, absences) {
       if (err) return cb(err);
       cb(null, absences);
@@ -90,6 +92,7 @@ Absence.remoteMethod('getEmployeeLeaves', {
   returns: {arg: 'absences', type: 'object'}
   
 })
+
 // leave request pending status count => Admin
 Absence.pendingCount = function(cb) {
   Absence.count({status: 'pending'}, function(err, count) {
@@ -107,7 +110,7 @@ Absence.remoteMethod('pendingCount', {
 Absence.pendingCountForManager = function(managerId,cb) {
   console.log('managerId', managerId);
   console.log('cb', cb);
-  Absence.count({ where :{managerId:managerId, status: 'pending'} }, function(err, countmng) {
+  Absence.find({ where :{managerId:managerId, status: 'pending'} }, function(err, countmng) {
     if (err) return cb(err);
     console.log('countmng', countmng);
     console.log(arguments);
@@ -115,6 +118,7 @@ Absence.pendingCountForManager = function(managerId,cb) {
   });
 };
 
+// leave requests pending count for manager
 Absence.remoteMethod('pendingCountForManager', {
   accepts: {arg: 'managerId', type: 'string',required: true , http: {source: 'query'}},
   returns: {arg: 'countmng', type: 'number'},
@@ -132,6 +136,31 @@ Absence.remoteMethod('deleteAllByName', {
   accepts: {arg: 'userId', type: 'string', required: true, http: {source: 'query'}},
   returns: {type: 'object', root: true},
   http: {verb: 'delete', path: '/deleteall'}
+});
+
+// remote method to show all leave requests of an employee
+// filterd by endDate is >= currentDate
+Absence.requestedLeaves = function(userId, cb) {
+  const currentDate = new Date();
+  Absence.find({
+    where: {
+      and: [
+        { userId: userId },
+        { endDate: { gte: currentDate }}
+        
+      ]
+    },
+    order: 'id DESC'
+  }, function(err, absences) {
+    if (err) return cb(err);
+    cb(null, absences);
+  });
+};
+
+Absence.remoteMethod('requestedLeaves', {
+  accepts: { arg: 'userId', type: 'string', required: true },
+  returns: { arg: 'absences', type: 'object' },
+  http: { verb: 'get', path: '/requested-leaves' }
 });
 
 };
