@@ -6,7 +6,7 @@
         <div class="employee-grid">
             <div v-for="(employee) in employees" :key="employee.name" class="employee-card">
             <h5>{{ employee.name }}</h5>
-            <p>{{ employee.Designation }}</p>
+            <p style="color:mediumblue;">{{ employee.Designation }}</p>
             </div>
         </div>
       </div>
@@ -31,7 +31,6 @@
                 this.$http.get(`http://localhost:3000/api/Users?access_token=${token}`)
                     .then(response => {
                         this.employees = response.body;
-                        console.log(response.body);
                     })
 
             }
@@ -54,7 +53,7 @@
 }
 
 .employee-card {
-  background-color: aliceblue;
+  background-color: rgb(201, 217, 230);
   border: 1px solid #ccc;
   border-radius: 4px;
   padding: 0.5rem;

@@ -4,10 +4,11 @@ import Login from '../components/Login.vue'
 import AllEmployees from '../components/Operations/Admin/employees'
 import AddEmployee from '../components/Operations/Admin/addemployee'
 import EditEmployee from '../components/Operations/Admin/editemployee'
-import Profile from '../components/Operations/Admin/profile'
 import Home from '../components/Operations/Admin/home'
 import notifications from '../components/Operations/Admin/notifications'
 import changepasswordAdmin from '../components/Operations/Admin/changepassword'
+import EditAdmin from '../components/Operations/Admin/Edit'
+
 
 import AllEmployeesMng from '../components/Operations/Manager/employees'
 import AddEmployeeMng from '../components/Operations/Manager/addemployee'
@@ -17,11 +18,13 @@ import ManagerHome from '../components/Operations/Manager/home'
 import AllEmployeestoMng from '../components/Operations/Manager/allemployees'
 import leaveRequestMng from '../components/Operations/Manager/leaverequest'
 import changepasswordMng from '../components/Operations/Manager/changepassword'
+import Edit from '../components/Operations/Manager/edit'
 
 import leaveRequestEmp from '../components/Operations/Employee/leaverequest'
 import EmployeeHome from '../components/Operations/Employee/home'
 import Employees from '../components/Operations/Employee/employees'
 import changepasswordEmp from '../components/Operations/Employee/changepassword'
+import EditEmployeeSelf from '../components/Operations/Employee/editEmp'
 
 Vue.use(VueRouter)
 
@@ -62,11 +65,6 @@ const routes = [
     component: EditEmployee
   },
   {
-    path: '/Admin/Profile',
-    name: 'Profile',
-    component: Profile
-  },
-  {
     path:'/Admin/notifications',
     name: 'notifications',
     component:notifications
@@ -75,6 +73,11 @@ const routes = [
     path:'/Admin/changepassword',
     name: 'changepasswordAdmin',
     component:changepasswordAdmin
+  },
+  {
+    path: '/Admin/Edit',
+    name: 'EditAdmin',
+    component: EditAdmin
   },
   {
     path: '/Manager/Employees',
@@ -113,19 +116,29 @@ const routes = [
     component:changepasswordMng
   },
   {
+    path:'/Manager/Edit',
+    name: 'Edit',
+    component:Edit
+  },
+  {
     path:'/Employee/leave',
     name: 'leaveRequestEmp',
     component:leaveRequestEmp
   },
   {
     path:'/Employee/Employees',
-    name: 'Employees',
+    name: 'Employeees',
     component:Employees
   },
   {
     path:'/Employee/changepassword',
     name: 'changepasswordEmp',
     component:changepasswordEmp
+  },
+  {
+    path:'/Employee/Edit',
+    name: 'EditEmployeeSelf',
+    component:EditEmployeeSelf
   },
  
 ]

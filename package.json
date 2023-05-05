@@ -11,6 +11,7 @@
     "bootstrap": "^5.2.3",
     "bootstrap-vue": "^2.23.1",
     "core-js": "^3.8.3",
+    "moment": "^2.29.4",
     "vue": "^2.7.14",
     "vue-resource": "^1.5.3",
     "vue-router": "^3.5.1"

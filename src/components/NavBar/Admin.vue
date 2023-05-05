@@ -1,26 +1,30 @@
 <template>
   <nav class="navbar">
     <div class="navbar-left">
-      <a href="/Admin" class="navbar-item">Home</a>
-      <a href="/Admin/Employees" class="navbar-item">Employees</a>
+      <a href="/Admin" class="navbar-item fa fa-home" > HOME </a>
+      <a href="/Admin/Employees" class="navbar-item fas fa-users"> EMPLOYEES </a>
     </div>
     <div class="navbar-right">
       
       <router-link to="/Admin/notifications" class="navbar-item">
-        <i class="fas fa-bell">
+        <!-- <i class="">
           <img src="https://png.pngtree.com/png-vector/20190321/ourmid/pngtree-vector-notification-icon-png-image_855007.jpg" alt="Notifications" class="navbar-icon">
           <span class="badge rounded-pill badge-notification bg-danger">{{ this.count }}</span>
-        </i>
+        </i> -->
+        <button type="button" class="icon-button ">
+          <img src="https://png.pngtree.com/png-vector/20190321/ourmid/pngtree-vector-notification-icon-png-image_855007.jpg" alt="Notifications" class="navbar-icon">
+          <span class="icon-button__badge">{{ this.count }}</span>
+        </button>
       </router-link>
       <div class="navbar-dropdown">
-        <a href="#" class="navbar-item" @click="showDropdown = !showDropdown">
-          <i class="fas fa-user-circle">      <img src="https://as1.ftcdn.net/v2/jpg/02/09/95/42/1000_F_209954204_mHCvAQBIXP7C2zRl5Fbs6MEWOEkaX3cA.jpg" alt="Profile" class="navbar-icon">
+        <a  class="navbar-item" @click="showDropdown = !showDropdown">
+          <i class="">      <img src="https://as1.ftcdn.net/v2/jpg/02/09/95/42/1000_F_209954204_mHCvAQBIXP7C2zRl5Fbs6MEWOEkaX3cA.jpg" alt="Profile" class="navbar-icon">
           </i>
         </a>
         <ul v-show="showDropdown" class="navbar-dropdown-menu">
-          <li><a >{{ employee.name}}</a></li>
+          <li><a href="/Admin/Edit">{{ employee.name}}</a></li>
           <li><a >{{ employee.Designation}}</a></li>
-          <li><a href="/Admin/changepassword">change password</a></li>
+          <li><a href="/Admin/changepassword">Change Password</a></li>
           <li><a  @click="logout()">Logout</a></li>
         </ul>
       </div>
@@ -47,11 +51,9 @@ export default {
     loadEmployee() {
                 const token = localStorage.getItem('token')
                 const id = localStorage.getItem('id')
-                console.log(id);
                 this.$http.get(`http://localhost:3000/api/Users/${id}?access_token=${token}`)
                     .then(response => {
                         this.employee = response.body;
-                        console.log(response.body);
                     })
 
       },
@@ -60,7 +62,6 @@ export default {
       this.$http.get(`http://localhost:3000/api/absences/pending-count?access_token=${token}`)
                     .then(response => {
                         this.count = response.body.count;
-                        console.log(response.body);
                     })
     }
     
@@ -86,6 +87,8 @@ export default {
   color: #fff;
   margin-right: 1rem;
   text-decoration: none;
+  font-size: 16px;
+  font-weight:  bold;
 }
 
 .navbar-item:hover {
@@ -132,6 +135,43 @@ export default {
   width: 30px;
   height: 30px;
   margin-left: 20px;
+}
+
+
+.icon-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 25px;
+  height: 25px;
+  color: #1c1b1b;
+  background: #121111;
+  border: none;
+  outline: none;
+  border-radius: 50%;
+}
+
+.icon-button:hover {
+  cursor: pointer;
+}
+
+.icon-button:active {
+  background: #101010;
+}
+
+.icon-button__badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 15px;
+  height: 15px;
+  background: red;
+  color: #faf8f8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
 }
 </style>
 

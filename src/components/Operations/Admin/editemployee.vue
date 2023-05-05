@@ -55,13 +55,8 @@
               <div class="field">
                 <div class="control">
                   <button class="btn btn-success" type="submit" @click.prevent="EditEmployee">Edit Employee</button>
+                  <button class="btn btn-danger" type="submit" @click.prevent="DeleteEmployee">Delete Employee</button>
                 </div>
-                <div class="control">
-                    <button class="btn btn-danger" type="submit" @click.prevent="DeleteEmployee">Delete Employee</button>
-                  </div>
-                  <!-- <div class="control">
-                    <button class="btn btn-danger" type="submit" @click.prevent="DeleteAbsence">Delete Absences</button>
-                  </div> -->
               </div>
             </form>
           </div>
@@ -89,71 +84,51 @@
           },
           Roles:['Admin','Manager','Employee'],
           managers:{},
-          isDisplay: false
+          isDisplay: false,
+          token:localStorage.getItem('token'),
+          id: this.$route.params.id
         }
       },
       methods:{
         EditEmployee(){
-                const token = localStorage.getItem('token')
-                const id = this.$route.params.id
-                console.log(id);
-                this.$http.put(`http://localhost:3000/api/Users/${id}?access_token=${token}`, this.employee)
+                this.$http.put(`http://localhost:3000/api/Users/${this.id}?access_token=${this.token}`, this.employee)
                     .then(response => {
-                        console.log('successfully updated')
+                        this.$router.push('/Admin/Employees')
                         console.log(response.body);
                     })
-                // this.isDisplay = true
         },
         loadEmployee() {
-                const token = localStorage.getItem('token')
-                const id = this.$route.params.id
-                console.log(id);
-                this.$http.get(`http://localhost:3000/api/Users/${id}?access_token=${token}`)
+                this.$http.get(`http://localhost:3000/api/Users/${this.id}?access_token=${this.token}`)
                     .then(response => {
                         this.employee = response.body;
-                        console.log(response.body);
                     })
 
             },
         loadManagers(){
-          const token = localStorage.getItem('token')
-                this.$http.get(`http://localhost:3000/api/Users/managers?access_token=${token}`)
+                this.$http.get(`http://localhost:3000/api/Users/managers?access_token=${this.token}`)
                     .then(response => {
                         this.managers = response.body;
-                        console.log(response.body);
                     }).catch(err =>{
                       console.log(err);
                     })
         },
         DeleteEmployee(){
-                const id = this.$route.params.id
-                const idd = {id}
-                console.log(id);
-                const token = localStorage.getItem('token')
-                this.$http.post(`http://localhost:3000/api/Users/DeleteUser?access_token=${token}`, idd)
+                const id = this.id
+                const idd = { id }
+                this.$http.post(`http://localhost:3000/api/Users/DeleteUser?access_token=${this.token}`, idd)
                     .then(response => {
                         console.log(response.body);
-                        console.log('successfully deleted')
-                        this.$http.delete(`http://localhost:3000/api/absences/deleteall?userId=${id}&access_token=${token}`)
+                        this.$http.delete(`http://localhost:3000/api/absences/deleteall?userId=${this.id}&access_token=${this.token}`)
                           .then(response => {
                             console.log('all absences deleted',response)
                           })
                         this.$router.push('../Employees')
                     })
             },
-        // DeleteAbsence(){
-        //   const id = this.$route.params.id
-        //         // const idd = {id}
-        //         // console.log(id);
-        //   const token = localStorage.getItem('token')
-         
-        // }
-  
       },
       mounted(){
         this.loadEmployee();
         this.loadManagers();
-        console.log(this.employee)
       }
     }
   </script>
@@ -194,8 +169,9 @@
   button {
     margin-top: 1.5rem;
   }
-  .btn-primary{
-    padding-right: 5px;
+ 
+  .btn{
+    margin-left: 10px;
   }
   </style>
   

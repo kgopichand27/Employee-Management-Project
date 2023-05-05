@@ -60,7 +60,7 @@
               </div>
               <div class="field">
                 <div class="control">
-                  <button class="btn btn-success" type="submit">Add Employee</button>
+                  <button class="btn btn-success" type="submit">Submit</button>
                 </div>
               </div>
             </form>
@@ -91,14 +91,13 @@
           Roles:['Manager','Employee'],
           managers:{},
           isdisplaymng:false,
+          token:localStorage.getItem('token')
         }
       },
       methods:{
         addEmployee(){
-          const token = localStorage.getItem('token')
-          this.$http.post(`http://localhost:3000/api/Users?access_token=${token}`, this.employee)
+          this.$http.post(`http://localhost:3000/api/Users?access_token=${this.token}`, this.employee)
           .then(res => {
-            
             console.log(res);
             alert('success Registered')
             this.$router.push('/Manager/Employees')
@@ -108,11 +107,9 @@
   
         },
         loadManagers(){
-          const token = localStorage.getItem('token')
-                this.$http.get(`http://localhost:3000/api/Users/managers?access_token=${token}`)
+                this.$http.get(`http://localhost:3000/api/Users/managers?access_token=${this.token}`)
                     .then(response => {
                         this.managers = response.body;
-                        console.log(response.body);
                     }).catch(err =>{
                       console.log(err);
                     })

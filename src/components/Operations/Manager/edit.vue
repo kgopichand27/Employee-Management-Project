@@ -13,7 +13,7 @@
               <div class="field">
                 <label class="label">Email</label>
                 <div class="control">
-                  <input class="input" type="email" v-model="employee.email" required>
+                  <input class="input" type="text" v-model="employee.email" required readonly>
                 </div>
               </div>
               <div class="field">
@@ -31,19 +31,7 @@
               <div class="field">
                 <label class="label">Role</label>
                 <div class="control">
-                  <select class="select" v-model="employee.Role" required>
-                    <option disabled value="">Please select a role</option>
-                    <option v-for="role in Roles" v-bind:key="role">{{ role }}</option>
-                  </select>
-                </div>
-              </div>
-              <div class="field"  v-if="this.employee.Role ==`Employee`">
-                <label class="label">Managers</label>
-                <div class="control">
-                  <select v-model="employee.manager">
-                    <option value="" disabled>Select an option</option>
-                    <option v-for="option in managers" :key="option.id" :value="option.id">{{ option.name }}</option>
-                  </select>
+                  <input class="input" type="text" v-model="employee.Role" required readonly>
                 </div>
               </div>
               <div class="field">
@@ -54,8 +42,7 @@
               </div>
               <div class="field">
                 <div class="control">
-                  <button class="btn btn-success" type="submit" @click.prevent="EditEmployee">Edit Employee</button>
-                  <button class="btn btn-danger" type="submit" @click.prevent="DeleteEmployee">Delete Employee</button>
+                  <button class="btn btn-success" type="submit" @click.prevent="EditEmployee">Edit Details</button>
                 </div>
               </div>
             </form>
@@ -78,22 +65,19 @@
             email:'',
             gender: '',
             dob: '',
-            Role: '',
+            Role:'',
             Designation:'',
-            manager: ''
           },
-          Roles:['Manager','Employee'],
-          managers:{},
           isDisplay: false,
-          token:localStorage.getItem('token'),
-          id: this.$route.params.id
+          token: localStorage.getItem('token'),
+          id: localStorage.getItem('id')
         }
       },
       methods:{
         EditEmployee(){
                 this.$http.put(`http://localhost:3000/api/Users/${this.id}?access_token=${this.token}`, this.employee)
                     .then(response => {
-                        this.$router.push('/Manager/Employees')
+                        this.$router.push('/Manager')
                         console.log(response.body);
                     })
         },
@@ -104,32 +88,9 @@
                     })
 
             },
-        loadManagers(){
-                this.$http.get(`http://localhost:3000/api/Users/managers?access_token=${this.token}`)
-                    .then(response => {
-                        this.managers = response.body;
-                    }).catch(err =>{
-                      console.log(err);
-                    })
-        },
-        DeleteEmployee(){
-                const id = this.id
-                const idd = {id}
-                this.$http.post(`http://localhost:3000/api/Users/DeleteUser?access_token=${this.token}`, idd)
-                    .then(response => {
-                        console.log(response.body);
-                        this.$http.delete(`http://localhost:3000/api/absences/deleteall?userId=${this.id}&access_token=${this.token}`)
-                          .then(response => {
-                            console.log('all absences deleted',response)
-                          })
-                        this.$router.push('../Employees')
-                    })
-            }
-  
       },
       mounted(){
         this.loadEmployee();
-        this.loadManagers();
       }
     }
   </script>
@@ -170,9 +131,8 @@
   button {
     margin-top: 1.5rem;
   }
-
-  .btn{
-    margin-left: 10px;
+  .btn-primary{
+    padding-right: 5px;
   }
   </style>
   

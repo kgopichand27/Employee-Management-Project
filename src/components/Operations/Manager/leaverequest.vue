@@ -22,11 +22,14 @@
       <br>
       <div class="leaveform">
         <button @click="alterDisplay" class="btn btn-primary">Request Leave</button>
+        <button @click="alterRequestedLeaves" class="btn btn-primary">View All Requested Leaves</button>
+        <br>
+        <br>
       <div v-if="isDisplay">
-        <form class="data">
+        <form class="data" style="background-color: antiquewhite; width:68%; padding:20px">
             <h3>Leave Request</h3>
             <br>
-            <label for="type"><b>Type of Leave:</b></label>
+            <label for="type"><b>Type of Leave</b></label>
             <br>
             <select v-model="absence.typeof" id="type" name="type">
               <option value="sick" v-if="employee.sickLeaves>0">Sick Leave</option>
@@ -40,30 +43,51 @@
             <br>
             <input type="text" v-model="absence.reason">
             <br>
-            <label for="start-date"><b>Start Date:</b></label>
+            <br>
+            <label for="start-date"><b>Start Date</b></label>
             <br>
             <input v-model="absence.startDate" type="date" id="start-date" name="start-date">
             <br>
             <br>
-            <label for="end-date"><b>End Date:</b></label>
+            <label for="end-date"><b>End Date</b></label>
             <br>
             <input v-model="absence.endDate" type="date" id="end-date" name="end-date">
-            <br>
-            <br>
-            <label for="num-leaves"><b>Number of Leaves:</b></label>
-            <br>
-            <input v-model="absence.leaves" type="number" id="num-leaves" name="num-leaves">
-            <br>
             <br>
             <br>
             <button class="btn btn-success" @click.prevent="submitForm">Submit</button>
           </form>
      </div>
+     <div v-if="isDisplayRequestedLeaves">
+      <table  style="background-color: antiquewhite; width:68%; padding:20px">
+        <thead>
+          <tr>
+            <th>Index</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Type</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(leave,index) in reqestedleaves" v-bind:key="leave.id">
+            <td> {{ index }}</td>
+            <td> {{ formatDate(leave.startDate) }}</td>
+            <td> {{ formatDate(leave.endDate) }}</td>
+            <td> {{ leave.typeof }}</td>
+            <td>{{ leave.status }}</td>
+          </tr>
+        </tbody>
+      </table>
+     </div>
+      </div>
+      <div>
+        
       </div>
     </div>
   </template>
   
   <script>
+  import moment from 'moment';
   import navbar from '@/components/NavBar/Manager.vue';
   export default {
     name:'leaveRequestMng',
@@ -80,7 +104,10 @@
         managerId: ''
         },
         employee:{},
-        isDisplay:false
+        reqestedleaves:{},
+        isDisplay:false,
+        isDisplayRequestedLeaves:false,
+        token:localStorage.getItem('token')
       }
     },
     components:{
@@ -88,14 +115,13 @@
     },
     methods: {
       submitForm() {
-        const token = localStorage.getItem('token')
         this.absence.name = this.employee.name
-        var date1 =new Date(this.startDate)
-        var date2 = new Date(this.endDate)
-        var total_seconds = Math.abs(date2 - date1) / 1000;
-        var days_difference = Math.floor (total_seconds / (60 * 60 * 24));
-        console.log('DAYS',days_difference);
-        this.$http.post(`http://localhost:3000/api/absences?access_token=${token}`, this.absence)
+        if (!this.absence.startDate || !this.absence.endDate) {
+        this.absence.leaves = 0
+        }
+        const duration = moment.duration(moment(this.absence.endDate).diff(moment(this.absence.startDate)));
+        this.absence.leaves =  duration.asDays();
+        this.$http.post(`http://localhost:3000/api/absences?access_token=${this.token}`, this.absence)
           .then(res => {
             console.log(res);
             alert('successfully requested leave')
@@ -105,23 +131,48 @@
           })
       },
       loadEmployee() {
-                const token = localStorage.getItem('token')
                 const id = localStorage.getItem('id')
-                this.$http.get(`http://localhost:3000/api/Users/${id}?access_token=${token}`)
+                this.$http.get(`http://localhost:3000/api/Users/${id}?access_token=${this.token}`)
                     .then(response => {
                         this.employee = response.body;
                     })
 
       },
+      loadLeaves(){
+        const id = localStorage.getItem('id')
+                this.$http.get(`http://localhost:3000/api/absences/getEmployeeLeaveRequests?id=${id}&access_token=${this.token}`)
+                    .then((res)=>{
+                        this.reqestedleaves = res.body.absences
+                 
+                    })
+                    .catch((err) =>{
+                        console.log(err)
+                    })
+      },
+      
       alterDisplay(){
-        if(this.isDisplay == false)
+        if(this.isDisplay == false){
         this.isDisplay = true
+        this.isDisplayRequestedLeaves = false}
         else
         this.isDisplay = false
+      },
+      alterRequestedLeaves(){
+        if(this.isDisplayRequestedLeaves == false){
+        this.isDisplayRequestedLeaves = true
+        this.isDisplay = false
+      } else {
+        this.isDisplayRequestedLeaves = false
       }
+      },
+      formatDate(dateString){
+                const date = new Date(dateString);
+                return date.toLocaleDateString();
+      },
     },
     mounted(){
         this.loadEmployee();
+        this.loadLeaves();
     }
 
   }
@@ -143,7 +194,7 @@
     padding-left: 100px;
   }
   .box {
-    background-color: #62b14b;
+    background-color: rgb(201, 217, 230);
     padding: 10px;
     border-radius: 5px;
     box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
@@ -167,5 +218,12 @@
   .vacation-leave {
     flex-basis: 45%;
   }
+  .btn{
+    margin-left: 10px;
+  }
+  th, td {
+    padding: 15px;
+  }
+  
 </style>
   

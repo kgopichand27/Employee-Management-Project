@@ -1,28 +1,33 @@
 <template>
   <nav class="navbar">
     <div class="navbar-left">
-      <a href="/Manager" class="navbar-item">Home</a>
-      <a href="/Manager/Employees" class="navbar-item">Team Details</a>
-      <a href="/Manager/AllEmployees" class="navbar-item">Employees</a>
-      <a href="/Manager/leave" class="navbar-item">leave request</a>
+      <a href="/Manager" class="navbar-item fa fa-home"> HOME</a>
+      <a href="/Manager/Employees" class="navbar-item fas fa-users"> TEAM DETAILS</a>
+      <a href="/Manager/AllEmployees" class="navbar-item fas fa-users"> EMPLOYEES</a>
+      <a href="/Manager/leave" class="navbar-item fa fa-pencil"> LEAVE REQUEST</a>
     </div>
     <div class="navbar-right">
-      <a href="#" class="navbar-item">
-        <i class="fas fa-bell">
+      <a class="navbar-item">
+        <i class="">
           <router-link to="/Manager/notifications">
-            <img src="https://png.pngtree.com/png-vector/20190321/ourmid/pngtree-vector-notification-icon-png-image_855007.jpg" alt="Notifications" class="navbar-icon">
+            <!-- <img src="https://png.pngtree.com/png-vector/20190321/ourmid/pngtree-vector-notification-icon-png-image_855007.jpg" alt="Notifications" class="navbar-icon">
+            <span class="badge rounded-pill badge-notification bg-danger">{{ this.count }}</span> -->
+            <button type="button" class="icon-button">
+              <img src="https://png.pngtree.com/png-vector/20190321/ourmid/pngtree-vector-notification-icon-png-image_855007.jpg" alt="Notifications" class="navbar-icon">
+              <span class="icon-button__badge">{{ this.count }}</span>
+            </button>
           </router-link >
         </i>
       </a>
       <div class="navbar-dropdown">
-        <a href="#" class="navbar-item" @click="showDropdown = !showDropdown">
-          <i class="fas fa-user-circle">      <img src="https://as1.ftcdn.net/v2/jpg/02/09/95/42/1000_F_209954204_mHCvAQBIXP7C2zRl5Fbs6MEWOEkaX3cA.jpg" alt="Profile" class="navbar-icon">
+        <a  class="navbar-item" @click="showDropdown = !showDropdown">
+          <i class="">      <img src="https://as1.ftcdn.net/v2/jpg/02/09/95/42/1000_F_209954204_mHCvAQBIXP7C2zRl5Fbs6MEWOEkaX3cA.jpg" alt="Profile" class="navbar-icon">
           </i>
         </a>
         <ul v-show="showDropdown" class="navbar-dropdown-menu">
-          <li><a>{{ employee.name}}</a></li>
+          <li><a href="/Manager/Edit">{{ employee.name}}</a></li>
           <li><a>{{ employee.Designation}}</a></li>
-          <li><a href="/Manager/changepassword">change password</a></li>
+          <li><a href="/Manager/changepassword">Change Password</a></li>
           <li><a  @click="logout()">Logout</a></li>
         </ul>
       </div>
@@ -36,7 +41,11 @@ export default {
   data() {
     return {
       showDropdown: false,
-      employee:{}
+      employee:{},
+      absencerequest:{},
+      count:0,
+      token:localStorage.getItem('token'),
+      id:localStorage.getItem('id')
     };
   },
   methods:{
@@ -46,20 +55,25 @@ export default {
       this.$router.push('/');
     },
     loadEmployee() {
-                const token = localStorage.getItem('token')
-                const id = localStorage.getItem('id')
-                console.log(id);
-                this.$http.get(`http://localhost:3000/api/Users/${id}?access_token=${token}`)
+                this.$http.get(`http://localhost:3000/api/Users/${this.id}?access_token=${this.token}`)
                     .then(response => {
                         this.employee = response.body;
-                        console.log(response.body);
                     })
 
       },
+    loadNotifyMng(){
+      this.$http.get(`http://localhost:3000/api/absences/pending-count-mng?managerId=${this.id}&access_token=${this.token}`)
+                    .then(response => {
+                        this.absencerequest = response.body;
+                        this.count = response.body.countmng.length;
+                    })
+    }
+    
     
   },
   mounted(){
     this.loadEmployee();
+    this.loadNotifyMng();
   }
 };
 </script>
@@ -78,6 +92,8 @@ export default {
   color: #fff;
   margin-right: 1rem;
   text-decoration: none;
+  font-size: 16px;
+  font-weight:  bold;
 }
 
 .navbar-item:hover {
@@ -125,6 +141,42 @@ export default {
   width: 30px;
   height: 30px;
   margin-left: 20px;
+}
+
+.icon-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 25px;
+  height: 25px;
+  color: #1c1b1b;
+  background: #121111;
+  border: none;
+  outline: none;
+  border-radius: 50%;
+}
+
+.icon-button:hover {
+  cursor: pointer;
+}
+
+.icon-button:active {
+  background: #101010;
+}
+
+.icon-button__badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 15px;
+  height: 15px;
+  background: red;
+  color: #faf8f8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
 }
 </style>
 

@@ -1,25 +1,20 @@
 <template>
   <nav class="navbar">
     <div class="navbar-left">
-      <a href="/Employee" class="navbar-item">Home</a>
-      <a href="/Employee/leave" class="navbar-item">Leave Request</a>
-      <a href="/Employee/Employees" class="navbar-item">Employees</a>
+      <a href="/Employee" class="navbar-item fa fa-home"> HOME</a>
+      <a href="/Employee/Employees" class="navbar-item fas fa-users"> EMPLOYEES</a>
+      <a href="/Employee/leave" class="navbar-item fa fa-pencil"> LEAVE REQUEST</a>
     </div>
     <div class="navbar-right">
-      <a href="#" class="navbar-item">
-        <i class="fas fa-bell">
-          <img src="https://png.pngtree.com/png-vector/20190321/ourmid/pngtree-vector-notification-icon-png-image_855007.jpg" alt="Notifications" class="navbar-icon">
-        </i>
-      </a>
       <div class="navbar-dropdown">
-        <a href="#" class="navbar-item" @click="showDropdown = !showDropdown">
-          <i class="fas fa-user-circle">      <img src="https://as1.ftcdn.net/v2/jpg/02/09/95/42/1000_F_209954204_mHCvAQBIXP7C2zRl5Fbs6MEWOEkaX3cA.jpg" alt="Profile" class="navbar-icon">
+        <a class="navbar-item" @click="showDropdown = !showDropdown">
+          <i class="">      <img src="https://as1.ftcdn.net/v2/jpg/02/09/95/42/1000_F_209954204_mHCvAQBIXP7C2zRl5Fbs6MEWOEkaX3cA.jpg" alt="Profile" class="navbar-icon">
           </i>
         </a>
         <ul v-show="showDropdown" class="navbar-dropdown-menu">
-          <li><a >{{ employee.name}}</a></li>
+          <li><a  href="/Employee/Edit">{{ employee.name}}</a></li>
           <li><a >{{ employee.Designation}}</a></li>
-          <li><a href="/Employee/changepassword">change password</a></li>
+          <li><a href="/Employee/changepassword">Change Password</a></li>
           <li><a  @click="logout()">Logout</a></li>
         </ul>
       </div>
@@ -75,6 +70,8 @@ export default {
   color: #fff;
   margin-right: 1rem;
   text-decoration: none;
+  font-size: 16px;
+  font-weight:  bold;
 }
 
 .navbar-item:hover {

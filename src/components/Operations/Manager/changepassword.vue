@@ -14,7 +14,7 @@
                 <input type="password" class="form-control" id="exampleInputPassword2" placeholder="New Password" v-model="myUser.newPassword">
             </div>
             <br>
-            <button type="submit" class="btn btn-primary" @click.prevent="changePassword">update-password</button>
+            <button type="submit" class="btn btn-primary" @click.prevent="changePassword">Update Password</button>
         </form>
     </div>
 

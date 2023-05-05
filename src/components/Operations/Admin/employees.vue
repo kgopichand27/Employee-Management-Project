@@ -6,7 +6,7 @@
         <div class="employee-grid">
             <div v-for="(employee,index) in employees" :key="employee.name" class="employee-card">
             <h5>{{ employee.name }}</h5>
-            <p>{{ employee.Designation }}</p>
+            <p style="color:mediumblue;">{{ employee.Designation }}</p>
             <button class="btn btn-info" @click="moreInfo(index)">moreInfo</button>
             </div>
         </div>
@@ -23,7 +23,8 @@
         name: 'AllEmployees',
         data(){
           return {
-            employees:{}
+            employees:{},
+            token:localStorage.getItem('token')
           }
         },
         components:{
@@ -31,11 +32,9 @@
         },
         methods:{
           loadEmployees() {
-                const token = localStorage.getItem('token')
-                this.$http.get(`http://localhost:3000/api/Users?access_token=${token}`)
+                this.$http.get(`http://localhost:3000/api/Users?access_token=${this.token}`)
                     .then(response => {
                         this.employees = response.body;
-                        console.log(response.body);
                     })
 
             },
@@ -57,13 +56,13 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   grid-gap: 1rem;
-  width: 700px;
+  width: 800px;
   font-size: 12px;
   padding: 20px;
 }
 
 .employee-card {
-  background-color: aliceblue;
+  background-color: rgb(201, 217, 230);
   border: 1px solid #ccc;
   border-radius: 4px;
   padding: 0.5rem;

@@ -14,7 +14,7 @@
                 <input type="password" class="form-control" id="exampleInputPassword2" placeholder="New Password" v-model="myUser.newPassword">
             </div>
             <br>
-            <button type="submit" class="btn btn-primary" @click.prevent="changePassword">update-password</button>
+            <button type="submit" class="btn btn-primary" @click.prevent="changePassword">Update Password</button>
         </form>
     </div>
 
@@ -43,7 +43,6 @@
                 this.$http.patch("http://localhost:3000/api/Users/change-password?access_token="+this.token, this.myUser)
                     .then((res)=>{
                         console.log(res);
-                        console.log(this.myUser);
                         this.$router.push("/");
                     })
                     .catch((err)=>{

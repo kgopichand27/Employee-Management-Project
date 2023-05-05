@@ -6,7 +6,7 @@
         <div class="employee-grid">
             <div v-for="(employee,index) in employees" :key="employee.name" class="employee-card">
             <h5>{{ employee.name }}</h5>
-            <p>{{ employee.Designation }}</p>
+            <p style="color:mediumblue;">{{ employee.Designation }}</p>
             <button class="btn btn-info" @click="moreInfo(index)">moreInfo</button>
             </div>
         </div>
@@ -36,8 +36,8 @@
                 this.$http.get(`http://localhost:3000/api/Users/getEmployees?manager=${manager}&access_token=${token}`)
                     .then(response => {
                         this.employees = response.body.employees;
-                        console.log("data",response.body.employees);
-                        console.log(typeof(this.employees))
+                        // console.log("data",response.body.employees);
+                        // console.log(typeof(this.employees))
                     })
 
             },

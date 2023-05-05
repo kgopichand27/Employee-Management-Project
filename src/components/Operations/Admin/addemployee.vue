@@ -29,13 +29,7 @@
                 </div>
               </div>
               <div class="field">
-                <label class="label">Profile Picture</label>
-                <div class="control">
-                  <input class="input" type="file">
-                </div>
-              </div>
-              <div class="field">
-                <label class="label">DOB</label>
+                <label class="label">Date Of Birth</label>
                 <div class="control">
                   <input class="input" type="date" v-model="employee.dob" required>
                 </div>
@@ -66,7 +60,7 @@
               </div>
               <div class="field">
                 <div class="control">
-                  <button class="btn btn-success" type="submit">Add Employee</button>
+                  <button class="btn btn-success" type="submit">Submit</button>
                 </div>
               </div>
             </form>
@@ -97,18 +91,16 @@
           Roles:['Admin','Manager','Employee'],
           managers:{},
           isdisplaymng:false,
+          token: localStorage.getItem('token')
         }
       },
       methods:{
         addEmployee(){
-          const token = localStorage.getItem('token')
-          // this.employee.manager = JSON.stringify(this.employee.manager)
-          console.log(this.employee.manager.id)
-          this.$http.post(`http://localhost:3000/api/Users?access_token=${token}`, this.employee)
+          // console.log(this.employee.manager.id)
+          this.$http.post(`http://localhost:3000/api/Users?access_token=${this.token}`, this.employee)
           .then(res => {
-            
-            console.log(res);
-            alert('success Registered')
+            console.log(res)
+            alert('successfully Registered')
             this.$router.push('/Admin/Employees')
           }, err => {
             console.log(err)
@@ -116,11 +108,9 @@
   
         },
         loadManagers(){
-          const token = localStorage.getItem('token')
-                this.$http.get(`http://localhost:3000/api/Users/managers?access_token=${token}`)
+                this.$http.get(`http://localhost:3000/api/Users/managers?access_token=${this.token}`)
                     .then(response => {
                         this.managers = response.body;
-                        console.log(response.body);
                     }).catch(err =>{
                       console.log(err);
                     })

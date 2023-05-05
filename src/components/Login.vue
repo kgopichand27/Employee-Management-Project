@@ -108,7 +108,7 @@
   .main {
     background: rgba(255, 255, 255, 0.4);
     position: absolute;
-    top: 20%;
+    top: 10%;
     left: 30%;
     width: 40%;
     text-align: center;
@@ -130,7 +130,7 @@
     text-align: center;
     outline: none;
     margin: 10px;
-    width: 30%;
+    width: 50%;
     box-sizing: border-box;
     font-family: "Poppins", sans-serif;
     font-size: 18px;
@@ -148,6 +148,7 @@
   .button {
     cursor: pointer;
     user-select: none;
+    width: 30%;
   }
   img {
     height: 5.2rem;
