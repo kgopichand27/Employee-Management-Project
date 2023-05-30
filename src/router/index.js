@@ -26,6 +26,9 @@ import Employees from '../components/Operations/Employee/employees'
 import changepasswordEmp from '../components/Operations/Employee/changepassword'
 import EditEmployeeSelf from '../components/Operations/Employee/editEmp'
 
+import forgetpassword from '../components/forgetpassword'
+import reset from '../components/reset'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -33,6 +36,11 @@ const routes = [
     path: '/',
     name: 'Login',
     component: Login
+  },
+  {
+    path: '/forgetPassword',
+    name: 'forgetPassword',
+    component: forgetpassword
   },
   {
     path: '/Admin',
@@ -140,6 +148,15 @@ const routes = [
     name: 'EditEmployeeSelf',
     component:EditEmployeeSelf
   },
+  {
+    path: '/reset',
+    name: 'reset',
+    component: reset,
+    meta: {
+        requiresAuth: false,
+        requiredRole: null
+      }
+}
  
 ]
 
