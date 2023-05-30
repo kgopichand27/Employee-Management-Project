@@ -2,8 +2,10 @@
   <nav class="navbar">
     <div class="navbar-left">
       <a href="/Manager" class="navbar-item fa fa-home"> HOME</a>
-      <a href="/Manager/Employees" class="navbar-item fas fa-users"> TEAM DETAILS</a>
-      <a href="/Manager/AllEmployees" class="navbar-item fas fa-users"> EMPLOYEES</a>
+      <a href="/Manager/Employees" class="navbar-item"> 
+        <img src="https://mediationnorthernireland.org/app/uploads/2016/07/staff_white.png" alt="" style="height:23px">TEAM DETAILS</a>
+        <a href="/Manager/AllEmployees" class="navbar-item">
+       <img src="https://mediationnorthernireland.org/app/uploads/2016/07/staff_white.png" alt="" style="height:23px">EMPLOYEES</a>
       <a href="/Manager/leave" class="navbar-item fa fa-pencil"> LEAVE REQUEST</a>
     </div>
     <div class="navbar-right">

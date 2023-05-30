@@ -1,8 +1,9 @@
 <template>
   <nav class="navbar">
     <div class="navbar-left">
-      <a href="/Admin" class="navbar-item fa fa-home" > HOME </a>
-      <a href="/Admin/Employees" class="navbar-item fas fa-users"> EMPLOYEES </a>
+      <a href="/Admin" class="navbar-item fa fa-home" >  HOME </a>
+      <a href="/Admin/Employees" class="navbar-item">
+        <img src="https://www.nicepng.com/png/full/355-3559775_better-benefits-for-employees-employees-icon-png-white.png" alt=""  style="height:18px">EMPLOYEES</a>
     </div>
     <div class="navbar-right">
       

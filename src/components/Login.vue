@@ -39,7 +39,6 @@
         <router-link to="/forgetPassword">Forget Password</router-link>
       </div>
       <br>
-      <br>
       <div v-if="ispasswordtrue">
         <p style="color:red;">Incorrect email or password,Please try again!</p>
        </div>

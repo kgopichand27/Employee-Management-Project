@@ -1,6 +1,6 @@
 <template>
 <div class="main">
-<div class="card text-center" style="width: 400px; margin: auto;border: 3px solid green;padding: 10px;">
+<div class="card text-center" style="width: 400px; margin: auto;border: 1px solid green;padding: 10px;">
   <div class="card-header h5 text-white bg-primary">Password Reset</div>
       <div class="card-body px-5">
           <p class="card-text py-2">

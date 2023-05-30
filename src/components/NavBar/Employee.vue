@@ -2,7 +2,8 @@
   <nav class="navbar">
     <div class="navbar-left">
       <a href="/Employee" class="navbar-item fa fa-home"> HOME</a>
-      <a href="/Employee/Employees" class="navbar-item fas fa-users"> EMPLOYEES</a>
+      <a href="/Employee/Employees" class="navbar-item">
+        <img src="https://mediationnorthernireland.org/app/uploads/2016/07/staff_white.png" alt="" style="height:23px">EMPLOYEES</a>
       <a href="/Employee/leave" class="navbar-item fa fa-pencil"> LEAVE REQUEST</a>
     </div>
     <div class="navbar-right">
