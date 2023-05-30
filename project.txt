@@ -1,0 +1,72 @@
+Sure, I can help you with the project. Here is an outline of the project and its features:
+Project OutlineRoles
+Admin----
+Manager----
+Employee----
+
+Admin:
+
+FeaturesAdmin can add both Managers and Employees.------- done
+Admin can access all employees.------done
+Managers can add only Employees under them.------- done
+Managers can access only the employees under them and edit their details.------done
+
+Employees can create absence requests. done
+When an employee creates an absence request, the Manager will be notified to approve/reject the request. done
+The system supports two types of leave requests - Sick and Vacation. done
+Each employee will have a total of 25 Vacation leaves and 12 Sick leaves per calendar year. done
+If an employee tries to create a request that exceeds this limit, they will receive an error message. done
+Employees can edit their own record. --done
+Admin can access all absence requests and approve/reject them.---done
+
+
+
+Tech Stack
+Backend: Node.js, Loopback 2.x, and MongoDB.
+Frontend: Vue.js and bootstrap
+
+Implementation DetailsModels
+User: Contains information about users.
+AbsenceRequest: Contains information about employee absence requests.\
+
+
+User Roles
+Admin: Has full access to all features.
+Manager: Can view and edit employees under them and approve/reject absence requests.
+Employee: Can create absence requests and edit their own record.
+
+User Properties
+Username: String
+Password: String
+Role: String
+Manager ID: String (if role is Manager)
+
+AbsenceRequest Properties
+Employee ID: String
+Type: String (Sick or Vacation)
+Start Date: Date
+End Date: Date
+Status: String (Pending, Approved, or Rejected)
+Reason: String
+
+API Endpoints
+GET /api/users: Get all users. (Admin only)
+POST /api/users: Add a new user. (Admin only)
+PUT /api/users/:id: Update an existing user. (Admin or Manager)
+DELETE /api/users/:id: Delete a user. (Admin only)
+GET /api/absence-requests: Get all absence requests. (Admin or Manager)
+POST /api/absence-requests: Create a new absence request. (Employee)
+PUT /api/absence-requests/:id: Update an absence request. (Manager)
+DELETE /api/absence-requests/:id: Delete an absence request. (Admin or Manager)
+
+Frontend
+The frontend will have separate views for each role (Admin, Manager, and Employee). Each view will have a login page where the user can enter their username and password. Upon successful login, the user will be redirected to their respective view.
+The views will have the following features:
+Admin View: Display a list of all users and absence requests. Allow the admin to add, edit, and delete users and approve/reject absence requests.
+
+Manager View: Display a list of employees under the manager and their absence requests. Allow the manager to approve/reject absence requests and edit employee details.
+
+Employee View: Display a list of the employee's absence requests. Allow the employee to create new absence requests and edit their own details.
+The frontend will be built using Vue.js and Vuetify, a material design component framework for Vue.js. The views will communicate with the backend API using Axios, a promise-based HTTP client for JavaScript.
+I hope this helps you get started with your project. Let me know if you have any questions or need further assistance.
+

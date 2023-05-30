@@ -86,6 +86,13 @@
       "principalId": "Employee",
       "permission": "ALLOW",
       "property": "find"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$unauthenticated",
+      "permission": "ALLOW",
+      "property": "forgetPassword"
     }
   ],
   "methods": {}
