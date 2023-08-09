@@ -24,7 +24,7 @@
     },
     "Designation": {
       "type": "string",
-      "required": true
+      "required": false
     },
     "manager": {
       "type": "string",

@@ -8,6 +8,14 @@ module.exports = function(Users) {
     Users.afterRemote('create', function(context,data,next) {
         console.log(data);
              const userID=data.__data.id;
+                const to = data.__data.email;
+                const subject = 'Invitation to Applaud@work';
+                const text = `Follow the Instructions to set the password and update the profile.
+                1. Click the link to set the password: http://localhost:8080/reset?id=${data.__data.id}
+                2. Then, using your credentials, log in to the site.
+                3. Go to Profile and update your information.
+                Thank you....!` ;
+                email1.sendEmail(to, subject, text);
                 Users.app.models.Role.findOne({where:{name:data.__data.Role}},function(err,role){
                     if(err) throw err;
                     console.log(role);
@@ -27,7 +35,6 @@ module.exports = function(Users) {
 
     Users.DeleteUser=function(id,cb)
        {
-        //console.log(Book);
         Users.findOne({where:{id: id}},function(err,data){
             if(err) {
                 cb(err);
