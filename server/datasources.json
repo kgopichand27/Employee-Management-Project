@@ -5,9 +5,9 @@
   },
   "mymongo": {
     "host": "",
-    "url": "mongodb+srv://gopi:gopichand@cluster0.lawq5cp.mongodb.net/Employee_lb?retryWrites=true&w=majority",
+    "url": "database_url",
     "database": "Employee_lb",
-    "password": "gopichand",
+    "password": "*****",
     "name": "mymongo",
     "user": "gopi",
     "connector": "mongodb"
