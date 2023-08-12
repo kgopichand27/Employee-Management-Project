@@ -23,6 +23,7 @@
 
 <script>
   import Admin from '@/components/NavBar/Admin.vue';
+  import { checkToken } from '@/utils/utils';
     export default{
         name:'changePasswordAdmin',
         data(){
@@ -40,6 +41,7 @@
         },
         methods:{
             changePassword(){
+                
                 this.$http.patch("http://localhost:3000/api/Users/change-password?access_token="+this.token, this.myUser)
                     .then((res)=>{
                         console.log(res);
@@ -49,6 +51,9 @@
                         console.log(err);
                     })
             }
+        },
+        mounted(){
+            checkToken(this.token);
         }
     }
 </script>

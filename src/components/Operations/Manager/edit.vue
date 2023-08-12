@@ -52,7 +52,8 @@
   </template>
   
   <script>
-    import Manager from '@/components/NavBar/Manager.vue'
+    import Manager from '@/components/NavBar/Manager.vue';
+    import { checkToken } from '@/utils/utils';
     export default{
       name: 'editEmployee',
       components:{
@@ -90,6 +91,7 @@
             },
       },
       mounted(){
+        checkToken(this.token);
         this.loadEmployee();
       }
     }

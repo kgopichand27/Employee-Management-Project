@@ -52,6 +52,7 @@
   </template>
   
   <script>
+    import { checkToken } from '@/utils/utils'
     import Admin from '@/components/NavBar/Admin.vue'
     export default{
       name: 'editEmployee',
@@ -91,6 +92,7 @@
             },
       },
       mounted(){
+        checkToken(this.token)
         this.loadEmployee();
       }
     }

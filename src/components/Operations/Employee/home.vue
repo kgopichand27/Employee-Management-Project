@@ -72,7 +72,8 @@
 </template>
 
 <script>
-    import Nav from '@/components/NavBar/Employee.vue'
+    import Nav from '@/components/NavBar/Employee.vue';
+    import { checkToken } from '@/utils/utils';
     export default{
         name:'HomePage',
         components: {
@@ -204,6 +205,7 @@
             },
         },
         beforeMount(){
+            checkToken(this.token);
             this.load()
         },
     } 

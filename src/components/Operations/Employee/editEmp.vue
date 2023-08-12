@@ -25,7 +25,7 @@
               <div class="field">
                 <label class="label">DOB</label>
                 <div class="control">
-                  <input class="input" type="text" v-model="employee.dob" required>
+                  <input class="input" type="date" v-model="employee.dob" required>
                 </div>
               </div>
               <div class="field">
@@ -52,7 +52,8 @@
   </template>
   
   <script>
-    import Employee from '@/components/NavBar/Employee.vue'
+    import Employee from '@/components/NavBar/Employee.vue';
+    import { checkToken } from '@/utils/utils';
     export default{
       name: 'editEmployee',
       components:{
@@ -90,6 +91,7 @@
             },
       },
       mounted(){
+        checkToken(this.token);
         this.loadEmployee();
       }
     }

@@ -72,7 +72,8 @@
 </template>
 
 <script>
-    import Nav from '@/components/NavBar/Manager.vue'
+    import Nav from '@/components/NavBar/Manager.vue';
+    import { checkToken } from '@/utils/utils';
     export default{
         name:'HomePage',
         components: {
@@ -206,6 +207,9 @@
         beforeMount(){
             this.load()
         },
+        mounted(){
+            checkToken(this.token);
+        }
     } 
 </script>
 

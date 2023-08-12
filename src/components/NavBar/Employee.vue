@@ -2,7 +2,7 @@
   <nav class="navbar">
     <div class="navbar-left">
       <a href="/Employee" class="navbar-item fa fa-home"> HOME</a>
-      <a href="/Employee/Employees" class="navbar-item">
+      <a href="/Employee/Employees" class="navbar-item fa">
         <img src="https://mediationnorthernireland.org/app/uploads/2016/07/staff_white.png" alt="" style="height:23px">EMPLOYEES</a>
       <a href="/Employee/leave" class="navbar-item fa fa-pencil"> LEAVE REQUEST</a>
     </div>
@@ -13,7 +13,7 @@
           </i>
         </a>
         <ul v-show="showDropdown" class="navbar-dropdown-menu">
-          <li><a  href="/Employee/Edit">{{ employee.name}}</a></li>
+          <li><a  href="/Employee/Edit">Profile</a></li>
           <li><a >{{ employee.Designation}}</a></li>
           <li><a href="/Employee/changepassword">Change Password</a></li>
           <li><a  @click="logout()">Logout</a></li>
@@ -71,8 +71,7 @@ export default {
   color: #fff;
   margin-right: 1rem;
   text-decoration: none;
-  font-size: 16px;
-  font-weight:  bold;
+  font-size: 18px;
 }
 
 .navbar-item:hover {

@@ -2,9 +2,9 @@
   <nav class="navbar">
     <div class="navbar-left">
       <a href="/Manager" class="navbar-item fa fa-home"> HOME</a>
-      <a href="/Manager/Employees" class="navbar-item"> 
+      <a href="/Manager/Employees" class="navbar-item fa"> 
         <img src="https://mediationnorthernireland.org/app/uploads/2016/07/staff_white.png" alt="" style="height:23px">TEAM DETAILS</a>
-        <a href="/Manager/AllEmployees" class="navbar-item">
+        <a href="/Manager/AllEmployees" class="navbar-item fa">
        <img src="https://mediationnorthernireland.org/app/uploads/2016/07/staff_white.png" alt="" style="height:23px">EMPLOYEES</a>
       <a href="/Manager/leave" class="navbar-item fa fa-pencil"> LEAVE REQUEST</a>
     </div>
@@ -27,7 +27,7 @@
           </i>
         </a>
         <ul v-show="showDropdown" class="navbar-dropdown-menu">
-          <li><a href="/Manager/Edit">{{ employee.name}}</a></li>
+          <li><a href="/Manager/Edit">Profile</a></li>
           <li><a>{{ employee.Designation}}</a></li>
           <li><a href="/Manager/changepassword">Change Password</a></li>
           <li><a  @click="logout()">Logout</a></li>
@@ -45,7 +45,7 @@ export default {
       showDropdown: false,
       employee:{},
       absencerequest:{},
-      count:0,
+      count:'',
       token:localStorage.getItem('token'),
       id:localStorage.getItem('id')
     };
@@ -94,8 +94,7 @@ export default {
   color: #fff;
   margin-right: 1rem;
   text-decoration: none;
-  font-size: 16px;
-  font-weight:  bold;
+  font-size: 18px;
 }
 
 .navbar-item:hover {

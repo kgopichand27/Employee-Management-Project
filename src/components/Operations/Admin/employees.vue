@@ -19,6 +19,7 @@
 
 <script>
     import Admin from '@/components/NavBar/Admin.vue'
+    import { checkToken } from '@/utils/utils';
     export default{
         name: 'AllEmployees',
         data(){
@@ -45,6 +46,7 @@
             }
         },
         mounted(){
+          checkToken(this.token);
           this.loadEmployees();
         }
     }

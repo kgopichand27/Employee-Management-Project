@@ -1,5 +1,59 @@
 <template>
-    <div class="main">
+    <div>
+        <section class="vh-100" style="background-color: #9A616D;">
+          <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+              <div class="col col-xl-10">
+                <div class="card" style="border-radius: 1rem;">
+                  <div class="row g-0">
+                    <div class="col-md-6 col-lg-5 d-none d-md-block">
+                      <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/img1.webp"
+                        alt="login form" class="img-fluid" style="border-radius: 1rem 0 0 1rem;" />
+                    </div>
+                    <div class="col-md-6 col-lg-7 d-flex align-items-center">
+                      <div class="card-body p-4 p-lg-5 text-black">
+        
+                        <form>
+        
+                          <div class="d-flex align-items-center mb-3 pb-1">
+                            <a href="https://www.applaudhr.com/">
+                            <img src="https://res.cloudinary.com/crunchbase-production/image/upload/c_lpad,f_auto,q_auto:eco,dpr_1/aztaseeudgqnwqeigr8q" alt="">
+                            </a>
+                          </div>
+        
+                          <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Password</h5>
+        
+                          <div class="form-outline mb-4">
+                            <input type="password" id="form2Example17" class="form-control form-control-lg" v-model="body.password" autocomplete="off" />
+                            <label class="form-label" for="form2Example17">New Password</label>
+                          </div>
+        
+                          <div class="form-outline mb-4">
+                            <input type="password" id="form2Example27" class="form-control form-control-lg" v-model="password1" autocomplete="off" />
+                            <label class="form-label" for="form2Example27">Confirm Password</label>
+                          </div>
+        
+                          <div class="pt-1 mb-4">
+                            <button class="btn btn-dark btn-lg btn-block" type="button" @click.prevent="updatePassword">Update Password</button>
+                          </div>
+                            <div v-if="status">
+                            <p style="color:red;">Password's Doesn't match</p>
+                          </div>
+                          <div v-else-if="status1">
+                          <p style="color: green;">Successfully Updated</p>
+                          </div>
+                          <a class="small text-muted" href="/">Login Page</a>
+                        </form>    
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    <!-- <div class="main">
         <div class="card text-center" style="width: 400px; margin: auto;border: 3px solid green;padding: 10px;">
             <div class="card-header h5 text-white bg-primary">Password Reset</div>
                 <div class="card-body px-5">
@@ -30,11 +84,11 @@
                 <router-link to="/"><button type="submit"  class="btn btn-link" > ⬅ Login page</button></router-link>
                 </div>
             </div>
-    </div>   
+    </div>    -->
     
 </template>
-    
-    <script>
+
+<script>
     export default{
         name:'resetPassword',
           data()
@@ -61,25 +115,29 @@
                         if(err){
                             console.log(err);
                         }else{
-                        
                         console.log(data);
                         }
                     });
                     this.status1=true;
+                    this.setTimeout(this.clearPassword(),5000);
 
                 }else{
                     console.log("inside else");
                     this.status=true;
-                    //setTimeout(this.clearPassword(),3000)
+                    setTimeout(this.clearPassword(),5000)
                 }
                 
+            },
+            clearPassword(){
+              this.body.password = '';
+              this.password1 = '';
             }
              
           }
       }
-    </script>
+</script>
     
-    <style>
+<style>
     
     
-    </style>
+</style>

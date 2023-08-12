@@ -1,5 +1,62 @@
 <template>
-    <div class="main">
+  <div>
+    <section class="vh-100" style="background-color: #9A616D;">
+      <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="col col-xl-10">
+            <div class="card" style="border-radius: 1rem;">
+              <div class="row g-0">
+                <div class="col-md-6 col-lg-5 d-none d-md-block">
+                  <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/img1.webp"
+                    alt="login form" class="img-fluid" style="border-radius: 1rem 0 0 1rem;" />
+                </div>
+                <div class="col-md-6 col-lg-7 d-flex align-items-center">
+                  <div class="card-body p-4 p-lg-5 text-black">
+    
+                    <form>
+    
+                      <div class="d-flex align-items-center mb-3 pb-1">
+                        <a href="https://www.applaudhr.com/">
+                        <img src="https://res.cloudinary.com/crunchbase-production/image/upload/c_lpad,f_auto,q_auto:eco,dpr_1/aztaseeudgqnwqeigr8q" alt="">
+                        </a>
+                      </div>
+    
+                      <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Sign into your account</h5>
+    
+                      <div class="form-outline mb-4">
+                        <input type="email" id="form2Example17" class="form-control form-control-lg" v-model="employee.email" autocomplete="off" required />
+                        <label class="form-label" for="form2Example17">Email address</label>
+                      </div>
+    
+                      <div class="form-outline mb-4">
+                        <input type="password" id="form2Example27" class="form-control form-control-lg" v-model="employee.password" autocomplete="off" required/>
+                        <label class="form-label" for="form2Example27">Password</label>
+                      </div>
+    
+                      <div class="pt-1 mb-4">
+                        <button class="btn btn-dark btn-lg btn-block" type="button" @click.prevent="login">Login</button>
+                      </div>
+    
+                      <a class="small text-muted" href="/forgetPassword">Forgot password?</a>
+                      <br>
+                      <br>
+                      <div v-if="ispasswordtrue">
+                        <p style="color:red;">Incorrect Password,Please try again!</p>
+                      </div>
+                      <div v-if="isRequriedCred">
+                        <p style="color:red;">All Fields are Required</p>
+                      </div>
+                    </form>    
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+    <!-- <div class="main">
       <h4>Welcome!</h4>
       <a href="https://www.applaudhr.com/">
         <img src="../assets/applaud.jpg" alt="">
@@ -45,7 +102,7 @@
       </form>
       
       <br />
-    </div>
+    </div> -->
   </template>
   
   <script>
@@ -58,13 +115,15 @@
                     email: '',
                     password: '',
                 },
-                ispasswordtrue: false
+                ispasswordtrue: false,
+                isRequriedCred : false,
             }
         },
         components:{
         },
         methods:{
             login(){
+              if(this.employee.email!='' && this.employee.password!=''){
                 console.log(this.employee);
                 this.$http.post("http://localhost:3000/api/Users/login", this.employee)
                     .then(res => {
@@ -84,23 +143,29 @@
                           this.$router.push('/Employee');
                         }else{
                           this.$router.push('/Admin');
-                        }
-  
-  
+                        }    
                       }).catch(err=>{
                         console.log(err);
                       })
                     }).catch(error=>{
                       this.ispasswordtrue = true,
                       console.log(error);
-                             this.$router.push('/');
-                            setTimeout(this.clearPassword,1500)
+                      this.$router.push('/');
+                      setTimeout(this.clearPassword,1500)
                     })
+                } 
+                else {
+                  this.isRequriedCred = true;
+                  console.log('Email and password are required');
+                  setTimeout(this.clearReqCred,1500);
+                }
             },
             clearPassword(){
-              this.employee.email = '',
                 this.employee.password = '',
                 this.ispasswordtrue = false
+            },
+            clearReqCred(){
+              this.isRequriedCred = false;
             }
            
         }

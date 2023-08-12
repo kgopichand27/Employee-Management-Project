@@ -1,17 +1,13 @@
 <template>
   <nav class="navbar">
     <div class="navbar-left">
-      <a href="/Admin" class="navbar-item fa fa-home" >  HOME </a>
-      <a href="/Admin/Employees" class="navbar-item">
-        <img src="https://www.nicepng.com/png/full/355-3559775_better-benefits-for-employees-employees-icon-png-white.png" alt=""  style="height:18px">EMPLOYEES</a>
+      <a href="/Admin" class="navbar-item fa fa-home" > HOME</a>
+      <a href="/Admin/Employees" class="navbar-item fa " >
+        <img src="https://www.nicepng.com/png/full/355-3559775_better-benefits-for-employees-employees-icon-png-white.png" alt=""  style="height:18px">EMPLOYEES
+      </a>
     </div>
     <div class="navbar-right">
-      
       <router-link to="/Admin/notifications" class="navbar-item">
-        <!-- <i class="">
-          <img src="https://png.pngtree.com/png-vector/20190321/ourmid/pngtree-vector-notification-icon-png-image_855007.jpg" alt="Notifications" class="navbar-icon">
-          <span class="badge rounded-pill badge-notification bg-danger">{{ this.count }}</span>
-        </i> -->
         <button type="button" class="icon-button ">
           <img src="https://png.pngtree.com/png-vector/20190321/ourmid/pngtree-vector-notification-icon-png-image_855007.jpg" alt="Notifications" class="navbar-icon">
           <span class="icon-button__badge">{{ this.count }}</span>
@@ -23,7 +19,7 @@
           </i>
         </a>
         <ul v-show="showDropdown" class="navbar-dropdown-menu">
-          <li><a href="/Admin/Edit">{{ employee.name}}</a></li>
+          <li><a href="/Admin/Edit">Profile</a></li>
           <li><a >{{ employee.Designation}}</a></li>
           <li><a href="/Admin/changepassword">Change Password</a></li>
           <li><a  @click="logout()">Logout</a></li>
@@ -40,7 +36,9 @@ export default {
     return {
       showDropdown: false,
       employee:{},
-      count:0
+      count:'',
+      token : localStorage.getItem('token'),
+      id : localStorage.getItem('id')
     };
   },
   methods:{
@@ -50,17 +48,14 @@ export default {
       this.$router.push('/');
     },
     loadEmployee() {
-                const token = localStorage.getItem('token')
-                const id = localStorage.getItem('id')
-                this.$http.get(`http://localhost:3000/api/Users/${id}?access_token=${token}`)
+                this.$http.get(`http://localhost:3000/api/Users/${this.id}?access_token=${this.token}`)
                     .then(response => {
                         this.employee = response.body;
                     })
 
       },
     loadNotifyCount(){
-      const token = localStorage.getItem('token')
-      this.$http.get(`http://localhost:3000/api/absences/pending-count?access_token=${token}`)
+      this.$http.get(`http://localhost:3000/api/absences/pending-count?access_token=${this.token}`)
                     .then(response => {
                         this.count = response.body.count;
                     })
@@ -88,8 +83,7 @@ export default {
   color: #fff;
   margin-right: 1rem;
   text-decoration: none;
-  font-size: 16px;
-  font-weight:  bold;
+  font-size: 18px;
 }
 
 .navbar-item:hover {
@@ -167,7 +161,7 @@ export default {
   right: -10px;
   width: 15px;
   height: 15px;
-  background: red;
+  background: rgb(244, 5, 33);
   color: #faf8f8;
   display: flex;
   justify-content: center;

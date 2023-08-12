@@ -125,7 +125,9 @@
 </template>
 
 <script>
-    import Nav from '@/components/NavBar/Admin.vue'
+    import Nav from '@/components/NavBar/Admin.vue';
+    import {checkToken} from '@/utils/utils.js';
+
     export default{
         name:'HomePage',
         components: {
@@ -166,10 +168,17 @@
         },
         methods:{
             load(){
-                //loading holidays
+                // loading holidays
+                console.log('token',this.token);
+                // if(!this.token){
+                //     // console.log(this.$routes.push('/'));
+                //     this.$router.push("/")
+                // }
+                checkToken(this.token);
                 this.$http.get(`http://localhost:3000/api/holidays?filter[order]=id desc&access_token=${this.token}`)
                     .then((res)=>{
                         // console.log(res.body);
+                        console.log('result', res);
                         this.holidays = res.body
                     })
                     .catch((err) =>{

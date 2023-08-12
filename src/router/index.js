@@ -2,7 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '../components/Login.vue'
 import AllEmployees from '../components/Operations/Admin/employees'
-import AddEmployee from '../components/Operations/Admin/addemployee'
+// import AddEmployee from '../components/Operations/Admin/addemployee'
+import AddEmp from '../components/Operations/Admin/addEmp'
 import EditEmployee from '../components/Operations/Admin/editemployee'
 import Home from '../components/Operations/Admin/home'
 import notifications from '../components/Operations/Admin/notifications'
@@ -62,10 +63,15 @@ const routes = [
     name: 'Employees',
     component: AllEmployees
   },
+  // {
+  //   path: '/Admin/Addemployee',
+  //   name: 'AddEmployee',
+  //   component: AddEmployee
+  // },
   {
     path: '/Admin/Addemployee',
-    name: 'AddEmployee',
-    component: AddEmployee
+    name: 'AddEmp',
+    component: AddEmp
   },
   {
     path: '/Admin/Employees/:id',
@@ -157,7 +163,6 @@ const routes = [
         requiredRole: null
       }
 }
- 
 ]
 
 const router = new VueRouter({

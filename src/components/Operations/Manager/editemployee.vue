@@ -7,25 +7,25 @@
               <div class="field">
                 <label class="label">Name</label>
                 <div class="control">
-                  <input class="input" type="text" v-model="employee.name" required>
+                  <input class="input" type="text" v-model="employee.name" required readonly>
                 </div>
               </div>
               <div class="field">
                 <label class="label">Email</label>
                 <div class="control">
-                  <input class="input" type="email" v-model="employee.email" required>
+                  <input class="input" type="email" v-model="employee.email" required readonly>
                 </div>
               </div>
               <div class="field">
                 <label class="label">Gender</label>
                 <div class="control">
-                  <input class="input" type="text" v-model="employee.gender" required>
+                  <input class="input" type="text" v-model="employee.gender" required readonly>
                 </div>
               </div>
               <div class="field">
                 <label class="label">DOB</label>
                 <div class="control">
-                  <input class="input" type="text" v-model="employee.dob" required>
+                  <input class="input" type="text" v-model="employee.dob" required readonly>
                 </div>
               </div>
               <div class="field">

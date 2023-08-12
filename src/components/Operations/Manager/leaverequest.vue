@@ -57,27 +57,32 @@
             <button class="btn btn-success" @click.prevent="submitForm">Submit</button>
           </form>
      </div>
-     <div v-if="isDisplayRequestedLeaves">
-      <table  style="background-color: antiquewhite; width:68%; padding:20px">
-        <thead>
-          <tr>
-            <th>Index</th>
-            <th>Start Date</th>
-            <th>End Date</th>
-            <th>Type</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(leave,index) in reqestedleaves" v-bind:key="leave.id">
-            <td> {{ index }}</td>
-            <td> {{ formatDate(leave.startDate) }}</td>
-            <td> {{ formatDate(leave.endDate) }}</td>
-            <td> {{ leave.typeof }}</td>
-            <td>{{ leave.status }}</td>
-          </tr>
-        </tbody>
-      </table>
+     <div v-if="isDisplayRequestedLeaves" >
+      <div v-if="this.reqestedleaves.length > 0">
+        <table  style="background-color: antiquewhite; width:68%; padding:20px">
+          <thead>
+            <tr>
+              <th>Index</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+              <th>Type</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(leave,index) in reqestedleaves" v-bind:key="leave.id">
+              <td> {{ index }}</td>
+              <td> {{ formatDate(leave.startDate) }}</td>
+              <td> {{ formatDate(leave.endDate) }}</td>
+              <td> {{ leave.typeof }}</td>
+              <td>{{ leave.status }}</td>
+            </tr>
+          </tbody>
+        </table>
+       </div>
+       <div v-else>
+        <h3>No Requested Leaves</h3>
+       </div>
      </div>
       </div>
       <div>
@@ -89,6 +94,8 @@
   <script>
   import moment from 'moment';
   import navbar from '@/components/NavBar/Manager.vue';
+  import { checkToken } from '@/utils/utils';
+
   export default {
     name:'leaveRequestMng',
     data() {
@@ -171,6 +178,7 @@
       },
     },
     mounted(){
+        checkToken(this.token);
         this.loadEmployee();
         this.loadLeaves();
     }

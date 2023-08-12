@@ -71,8 +71,9 @@
   
   <script>
   import Admin from '@/components/NavBar/Admin.vue';
+  import { checkToken } from '@/utils/utils';
   export default{
-      name: 'addEmployee',
+     name:"AddEmployee",
       components:{
         Admin
       },
@@ -100,7 +101,7 @@
           this.$http.post(`http://localhost:3000/api/Users?access_token=${this.token}`, this.employee)
           .then(res => {
             console.log(res)
-            alert('successfully Registered')
+            alert('Invitation Link Sent Successfully')
             this.$router.push('/Admin/Employees')
           }, err => {
             console.log(err)
@@ -118,7 +119,8 @@
   
       },
       mounted(){
-        this.loadManagers()
+        checkToken(this.token);
+        this.loadManagers();
       }
     }
   </script>

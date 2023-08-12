@@ -22,7 +22,9 @@
 </template>
 
 <script>
-    import Manager from '@/components/NavBar/Manager.vue'
+    import Manager from '@/components/NavBar/Manager.vue';
+    import { checkToken } from '@/utils/utils';
+
     export default{
         name:'changePasswordMng',
         data(){
@@ -50,6 +52,9 @@
                         console.log(err);
                     })
             }
+        },
+        mounted(){
+            checkToken(this.token);
         }
     }
 </script>

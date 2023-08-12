@@ -26,6 +26,8 @@
   
   <script>
 import Manager from '@/components/NavBar/Admin.vue'
+import { checkToken } from '@/utils/utils';
+
   export default {
     name:'leaveNotificationsee',
     components:{
@@ -73,6 +75,7 @@ import Manager from '@/components/NavBar/Admin.vue'
             }
     },
     mounted(){
+        checkToken(this.token);
         this.loadLeaveRequests();
     }
   };

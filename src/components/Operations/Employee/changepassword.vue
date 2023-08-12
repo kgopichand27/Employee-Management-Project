@@ -22,7 +22,8 @@
 </template>
 
 <script>
-    import Employee from '@/components/NavBar/Employee.vue'
+    import Employee from '@/components/NavBar/Employee.vue';
+    import { checkToken } from '@/utils/utils';
     export default{
         name:'changePasswordEmp',
         data(){
@@ -50,6 +51,9 @@
                         console.log(err);
                     })
             }
+        },
+        mounted(){
+            checkToken(this.token);
         }
     }
 </script>

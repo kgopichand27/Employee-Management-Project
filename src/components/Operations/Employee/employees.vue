@@ -14,12 +14,15 @@
 </template>
 
 <script>
-    import Employee from '@/components/NavBar/Employee.vue'
+    import Employee from '@/components/NavBar/Employee.vue';
+    import { checkToken } from '@/utils/utils';
     export default{
         name: 'AllEmployees',
         data(){
           return {
-            employees:{}
+            employees:{},
+            token:localStorage.getItem('token'),
+
           }
         },
         components:{
@@ -27,8 +30,7 @@
         },
         methods:{
           loadEmployees() {
-                const token = localStorage.getItem('token')
-                this.$http.get(`http://localhost:3000/api/Users?access_token=${token}`)
+                this.$http.get(`http://localhost:3000/api/Users?access_token=${this.token}`)
                     .then(response => {
                         this.employees = response.body;
                     })
@@ -36,6 +38,7 @@
             }
         },
         mounted(){
+          checkToken(this.token);
           this.loadEmployees();
         }
     }
