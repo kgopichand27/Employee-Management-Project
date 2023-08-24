@@ -3,4 +3,4 @@
 3. Install the npm on the main directory and client/front_end.
 4. If you encounter any errors related to packages, then install them.
 5. To execute the backend [loopback] type node . or nodemon. 
-6. To execute the front_end, first change the directory to client/front_end then type npm run serve.
+6. To execute the front_end, change the directory to client/front_end then type npm run serve.
